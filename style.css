@@ -1,0 +1,321 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.container {
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+}
+
+.header {
+    margin-bottom: 40px;
+    animation: slideDown 0.8s ease-out;
+}
+
+.header h1 {
+    font-size: 3.5rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+/* Gift Box Styling */
+.gift-box-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+    perspective: 1000px;
+}
+
+.gift-box {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.gift-box:hover {
+    transform: scale(1.1) rotateY(10deg);
+}
+
+.gift-box:active {
+    transform: scale(0.95);
+}
+
+/* Gift Box Components */
+.gift-body {
+    position: absolute;
+    width: 100%;
+    height: 80%;
+    bottom: 0;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    border-radius: 5px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset -2px -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.gift-lid {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110%;
+    height: 30%;
+    background: linear-gradient(135deg, #4ecdc4 0%, #44b0a0 100%);
+    border-radius: 3px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), inset -1px -1px 3px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.gift-ribbon-vertical {
+    position: absolute;
+    width: 15px;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 5;
+}
+
+.gift-ribbon-horizontal {
+    position: absolute;
+    width: 100%;
+    height: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(180deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 5;
+}
+
+.gift-bow {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle at 30% 30%, #ff6b9d, #ff4757);
+    border-radius: 50%;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    z-index: 15;
+}
+
+.gift-bow::before,
+.gift-bow::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 15px;
+    background: radial-gradient(circle at 30% 30%, #ff6b9d, #ff4757);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.gift-bow::before {
+    left: -30px;
+}
+
+.gift-bow::after {
+    right: -30px;
+}
+
+/* Surprises Container */
+.surprises-container {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.6s ease-out;
+    margin-top: 30px;
+}
+
+.surprises-container.active {
+    max-height: 600px;
+    opacity: 1;
+    animation: slideUp 0.6s ease-out;
+}
+
+.surprises-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.surprise-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    transform: scale(0);
+    animation: popIn 0.5s ease-out forwards;
+    cursor: default;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.surprise-1 { animation-delay: 0.1s; }
+.surprise-2 { animation-delay: 0.2s; }
+.surprise-3 { animation-delay: 0.3s; }
+.surprise-4 { animation-delay: 0.4s; }
+.surprise-5 { animation-delay: 0.5s; }
+.surprise-6 { animation-delay: 0.6s; }
+
+.surprise-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.surprise-emoji {
+    font-size: 3rem;
+    animation: bounce 0.6s ease-out;
+}
+
+.surprise-card p {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* Reset Button */
+.reset-btn {
+    padding: 12px 30px;
+    font-size: 1rem;
+    background: white;
+    color: #667eea;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.reset-btn.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reset-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.reset-btn:active {
+    transform: translateY(0);
+}
+
+/* Confetti Animation */
+.confetti {
+    position: fixed;
+    pointer-events: none;
+    font-size: 2rem;
+}
+
+/* Animations */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg) translateX(50px);
+    }
+    to {
+        transform: rotate(360deg) translateX(50px);
+    }
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+    .header h1 {
+        font-size: 2.5rem;
+    }
+
+    .header p {
+        font-size: 1.1rem;
+    }
+
+    .surprises-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gift-box {
+        width: 120px;
+        height: 120px;
+    }
+}

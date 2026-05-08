@@ -1,0 +1,149 @@
+.gift-box-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+  perspective: 1000px;
+}
+
+.gift-box {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.gift-box:hover {
+  transform: scale(1.1) rotateY(10deg);
+}
+
+.gift-box:active {
+  transform: scale(0.95);
+}
+
+.gift-box.animate {
+  animation: bounce 0.6s ease-out;
+}
+
+/* Gift Box Components */
+.gift-body {
+  position: absolute;
+  width: 100%;
+  height: 80%;
+  bottom: 0;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  border-radius: 5px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset -2px -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.gift-lid {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110%;
+  height: 30%;
+  background: linear-gradient(135deg, #4ecdc4 0%, #44b0a0 100%);
+  border-radius: 3px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), inset -1px -1px 3px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  transition: transform 0.6s ease-in-out;
+}
+
+.gift-box:hover .gift-lid {
+  transform: translateX(-50%) rotateX(-20deg);
+}
+
+.gift-box.animate .gift-lid {
+  animation: lidOpen 0.6s ease-out;
+}
+
+.gift-ribbon-vertical {
+  position: absolute;
+  width: 15px;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+
+.gift-ribbon-horizontal {
+  position: absolute;
+  width: 100%;
+  height: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(180deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+
+.gift-bow {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle at 30% 30%, #ff6b9d, #ff4757);
+  border-radius: 50%;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  z-index: 15;
+  animation: spin 3s linear infinite;
+}
+
+.gift-bow::before,
+.gift-bow::after {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 15px;
+  background: radial-gradient(circle at 30% 30%, #ff6b9d, #ff4757);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.gift-bow::before {
+  left: -30px;
+}
+
+.gift-bow::after {
+  right: -30px;
+}
+
+@keyframes lidOpen {
+  0% {
+    transform: translateX(-50%) rotateX(0);
+  }
+  100% {
+    transform: translateX(-50%) rotateX(-45deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateX(-50%) rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+@media (max-width: 600px) {
+  .gift-box {
+    width: 120px;
+    height: 120px;
+  }
+}

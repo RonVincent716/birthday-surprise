@@ -70,7 +70,6 @@ const photos = [
 ];
 
 function PhotoWheel() {
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [fullscreenPhoto, setFullscreenPhoto] = useState(null);
 

@@ -1,15 +1,13 @@
-// SurpriseMessages.jsx
 import React, { useEffect, useState } from 'react';
-import '../styles/SurpriseMessages.css';
+import '../styles/SurpriseMessages.css';  // Changed to look in styles folder
 
-function SurpriseMessages({ messages }) {
+function SurpriseMessages({ messages, onShowWheel }) {
   const [confetti, setConfetti] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
-    // Generate confetti on mount
     const confettiEmojis = ['💕', '💗', '💖', '💝', '💘', '💓', '🎀', '🌸', '🌹', '✨', '⭐', '🌟'];
     const newConfetti = Array.from({ length: 50 }, (_, i) => ({
       id: i,
@@ -67,8 +65,7 @@ function SurpriseMessages({ messages }) {
             className="confetti"
             style={{
               left: `${item.left}%`,
-              animation: `fall ${item.duration}s linear ${item.delay}s forwards`,
-              '--emoji': `'${item.emoji}'`
+              animation: `fall ${item.duration}s linear ${item.delay}s forwards`
             }}
           >
             {item.emoji}
@@ -84,32 +81,27 @@ function SurpriseMessages({ messages }) {
 
       {/* Envelope/Letter Container */}
       <div className="letter-container">
-        {/* Navigation Buttons */}
         <button 
           className="nav-button prev-button" 
           onClick={handlePrevCard}
           disabled={isAnimating}
-          aria-label="Previous card"
         >
           ←
         </button>
 
-        {/* Letter Card */}
         <div className={`letter-wrapper ${isAnimating ? 'animating' : ''}`}>
           <div className={`letter ${isOpen ? 'open' : 'closed'}`}>
-            {/* Envelope Back (visible when closed) */}
             <div className="envelope">
               <div className="envelope-flap"></div>
               <div className="envelope-body">
                 <div className="seal">💌</div>
                 <div className="envelope-address">
-                  <span>To the Pretty nurse i knew ❤️ </span>
-                  <span className="small-text">Happy birthday 🎉 </span>
+                  <span>To the Pretty nurse I knew ❤️</span>
+                  <span className="small-text">Happy birthday 🎉</span>
                 </div>
               </div>
             </div>
 
-            {/* Letter Content (visible when open) */}
             <div className="letter-content">
               <div className="letter-paper">
                 <div className="letter-header">
@@ -125,51 +117,42 @@ function SurpriseMessages({ messages }) {
               </div>
             </div>
 
-            {/* Open/Close Button */}
             {!isOpen ? (
-              <button 
-                className="open-button"
-                onClick={handleOpenLetter}
-                disabled={isAnimating}
-              >
-                <span className="button-text">Click me</span>
+              <button className="open-button" onClick={handleOpenLetter} disabled={isAnimating}>
+                <span className="button-text">Open Letter</span>
                 <span className="button-icon">✨</span>
               </button>
             ) : (
-              <button 
-                className="close-button"
-                onClick={handleCloseLetter}
-                disabled={isAnimating}
-              >
-                <span className="button-text">Close letter</span>
+              <button className="close-button" onClick={handleCloseLetter} disabled={isAnimating}>
+                <span className="button-text">Close Letter</span>
                 <span className="button-icon">📬</span>
               </button>
             )}
           </div>
         </div>
 
-        {/* Navigation Buttons */}
-        <button 
-          className="nav-button next-button" 
-          onClick={handleNextCard}
-          disabled={isAnimating}
-          aria-label="Next card"
-        >
+        <button className="nav-button next-button" onClick={handleNextCard} disabled={isAnimating}>
           →
         </button>
       </div>
 
-      {/* Card Counter */}
+      {/* Show Pictures Button - appears when letter is open */}
+      {isOpen && (
+        <button className="show-pictures-btn" onClick={onShowWheel}>
+          <span>🎨 Show Pictures</span>
+          <span className="btn-icon">📸</span>
+        </button>
+      )}
+
       <div className="card-counter">
         <span className="counter-heart">❤️</span>
         Letter {currentIndex + 1} of {messages.length}
         <span className="counter-heart">❤️</span>
       </div>
 
-      {/* Instruction text */}
       {!isOpen && (
         <div className="instruction-text">
-          <span>💌 Tap the Click me button to open a letter 💌</span>
+          <span>💌 Tap the Open Letter button to read your birthday message 💌</span>
         </div>
       )}
     </div>

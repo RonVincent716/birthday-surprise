@@ -1,82 +1,77 @@
-.app-container {
-  text-align: center;
-  max-width: 900px;
+/* App.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
   width: 100%;
-  padding: 40px 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Gift Screen */
+.gift-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #FFE4E1 0%, #FFB6C1 50%, #FFC0CB 100%);
+  position: relative;
+  animation: fadeIn 1s ease-out;
+}
+
+.gift-intro {
+  text-align: center;
+  margin-bottom: 50px;
   animation: slideDown 0.8s ease-out;
 }
 
-.header {
-  margin-bottom: 40px;
+.gift-title {
+  font-size: 2.5rem;
+  color: #fff;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+  margin-bottom: 15px;
+  font-family: 'Georgia', serif;
 }
 
-.header h1 {
-  font-size: 3.5rem;
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  margin-bottom: 10px;
-  animation: bounce 1s ease-in-out;
+.gift-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-style: italic;
 }
 
-.header p {
-  font-size: 1.3rem;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
+/* Letter Screen */
+.letter-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: fadeIn 0.8s ease-out;
 }
 
-/* Buttons */
-.reset-btn,
-.click-again-btn {
-  padding: 12px 30px;
-  font-size: 1.1rem;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: translateY(20px);
-  margin: 10px 5px;
-}
-
-.reset-btn.show,
-.click-again-btn.show {
-  opacity: 1;
-  transform: translateY(0);
-  animation: slideUp 0.5s ease-out;
-}
-
-.reset-btn {
-  background: white;
-  color: #667eea;
-}
-
-.click-again-btn {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  color: white;
-}
-
-.click-again-btn.is-switching,
-.click-again-btn:disabled {
-  opacity: 0.75;
-  cursor: wait;
-  transform: translateY(0);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-}
-
-.reset-btn:hover,
-.click-again-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.reset-btn:active,
-.click-again-btn:active {
-  transform: translateY(0);
+/* Wheel Screen */
+.wheel-screen {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #FFE4E1 0%, #FFB6C1 100%);
+  animation: fadeIn 0.8s ease-out;
 }
 
 /* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes slideDown {
   from {
     opacity: 0;
@@ -88,43 +83,15 @@
   }
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-/* Media Queries */
+/* Responsive */
 @media (max-width: 768px) {
-  .app-container {
-    padding: 20px 10px;
+  .gift-title {
+    font-size: 1.8rem;
+    padding: 0 20px;
   }
-
-  .header h1 {
-    font-size: 2.5rem;
-  }
-
-  .header p {
+  
+  .gift-subtitle {
     font-size: 1rem;
-  }
-
-  .reset-btn,
-  .click-again-btn {
-    font-size: 1rem;
-    padding: 10px 20px;
+    padding: 0 20px;
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/GiftBox.css';
+import '../styles/GiftBox.css';  // Changed to look in styles folder
 
 function GiftBox({ onClick }) {
   const [isAnimating, setIsAnimating] = useState(false);
@@ -19,6 +19,7 @@ function GiftBox({ onClick }) {
         <div className="gift-ribbon-horizontal"></div>
         <div className="gift-bow"></div>
       </div>
+      <p className="gift-hint">✨ Click the gift to open ✨</p>
     </div>
   );
 }

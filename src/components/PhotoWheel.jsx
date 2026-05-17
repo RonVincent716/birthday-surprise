@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import '../styles/PhotoWheel.css';
 
 // Import your images from the Images folder
@@ -13,148 +13,148 @@ import image8 from './Images/image8.jpg';
 import image9 from './Images/image9.jpg';
 
 const photos = [
-  { 
-    id: 1, 
-    title: "Birthday Celebration", 
-    desc: "A special day filled with joy!",
+  {
+    id: 1,
+    title: 'Birthday Celebration',
+    desc: 'A special day filled with joy!',
     image: image1
   },
-  { 
-    id: 2, 
-    title: "Spring Memories", 
-    desc: "Beautiful moments together",
+  {
+    id: 2,
+    title: 'Spring Memories',
+    desc: 'Beautiful moments together',
     image: image2
   },
-  { 
-    id: 3, 
-    title: "Coffee Dates", 
-    desc: "Warm conversations and laughter",
+  {
+    id: 3,
+    title: 'Coffee Dates',
+    desc: 'Warm conversations and laughter',
     image: image3
   },
-  { 
-    id: 4, 
-    title: "Sunset Walks", 
-    desc: "Golden hour magic",
+  {
+    id: 4,
+    title: 'Sunset Walks',
+    desc: 'Golden hour magic',
     image: image4
   },
-  { 
-    id: 5, 
-    title: "Surprise Gifts", 
-    desc: "Presents and happiness",
+  {
+    id: 5,
+    title: 'Surprise Gifts',
+    desc: 'Presents and happiness',
     image: image5
   },
-  { 
-    id: 6, 
-    title: "Silly Selfies", 
-    desc: "Crazy faces and fun times",
+  {
+    id: 6,
+    title: 'Silly Selfies',
+    desc: 'Crazy faces and fun times',
     image: image6
   },
-  { 
-    id: 7, 
-    title: "Holiday Cheer", 
-    desc: "Festive celebrations",
+  {
+    id: 7,
+    title: 'Holiday Cheer',
+    desc: 'Festive celebrations',
     image: image7
   },
-  { 
-    id: 8, 
-    title: "Star Moments", 
-    desc: "Shining bright together",
+  {
+    id: 8,
+    title: 'Star Moments',
+    desc: 'Shining bright together',
     image: image8
   },
-  { 
-    id: 9, 
-    title: "Cherished Times", 
-    desc: "Memories to treasure forever",
+  {
+    id: 9,
+    title: 'Cherished Times',
+    desc: 'Memories to treasure forever',
     image: image9
   }
 ];
 
 function PhotoWheel() {
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [fullscreenPhoto, setFullscreenPhoto] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const handlePhotoClick = (photo) => {
-    setFullscreenPhoto(photo);
-    setIsFullscreen(true);
+  const activePhoto = useMemo(() => photos[activeIndex], [activeIndex]);
+
+  const goToSlide = (index) => {
+    setActiveIndex(index);
   };
 
-  const closeFullscreen = () => {
-    setIsFullscreen(false);
-    setFullscreenPhoto(null);
-  };
-
-  const navigatePhoto = (direction) => {
-    const currentIndex = photos.findIndex(p => p.id === fullscreenPhoto.id);
-    let newIndex;
-    if (direction === 'next') {
-      newIndex = (currentIndex + 1) % photos.length;
-    } else {
-      newIndex = (currentIndex - 1 + photos.length) % photos.length;
-    }
-    setFullscreenPhoto(photos[newIndex]);
+  const navigate = (direction) => {
+    setActiveIndex((prev) => {
+      if (direction === 'next') {
+        return (prev + 1) % photos.length;
+      }
+      return (prev - 1 + photos.length) % photos.length;
+    });
   };
 
   return (
     <div className="gallery-container-new">
-      {/* Fullscreen Modal */}
-      {isFullscreen && fullscreenPhoto && (
-        <div className="fullscreen-modal" onClick={closeFullscreen}>
-          <div className="fullscreen-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-fullscreen" onClick={closeFullscreen}>✖</button>
-            <img 
-              src={fullscreenPhoto.image} 
-              alt={fullscreenPhoto.title}
-              className="fullscreen-image"
-            />
-            <div className="fullscreen-info">
-              <h2>{fullscreenPhoto.title}</h2>
-              <p>{fullscreenPhoto.desc}</p>
-            </div>
-            <button className="nav-fullscreen prev-fullscreen" onClick={() => navigatePhoto('prev')}>
-              ←
-            </button>
-            <button className="nav-fullscreen next-fullscreen" onClick={() => navigatePhoto('next')}>
-              →
-            </button>
-          </div>
-        </div>
-      )}
-
       <div className="gallery-header-new">
-        <h1>📸 Our Beautiful Photo Gallery 📸</h1>
-        <p>Click on any photo to view it in fullscreen</p>
+        <h1>Our Beautiful Photo Gallery</h1>
+        <p>Use arrows to browse. Captions update with each photo.</p>
       </div>
 
-      <div className="photo-grid">
-        {photos.map((photo) => (
-          <div 
-            key={photo.id} 
-            className="photo-card"
-            onClick={() => handlePhotoClick(photo)}
+      <div className="carousel-shell">
+        <button
+          className="carousel-nav prev-nav"
+          onClick={() => navigate('prev')}
+          aria-label="Previous photo"
+        >
+          &#8592;
+        </button>
+
+        <div className="carousel-window">
+          <div
+            className="carousel-track"
+            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
           >
-            <div className="photo-image-wrapper">
-              <img 
-                src={photo.image} 
-                alt={photo.title}
-                className="photo-image"
-              />
-              <div className="photo-overlay">
-                <span className="view-icon">🔍</span>
-                <p>Click to view</p>
+            {photos.map((photo) => (
+              <div key={photo.id} className="carousel-slide">
+                <div className="photo-card">
+                  <div className="photo-image-wrapper">
+                    <img
+                      src={photo.image}
+                      alt={photo.title}
+                      className="photo-image"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="photo-info">
-              <h3>{photo.title}</h3>
-              <p>{photo.desc}</p>
-            </div>
+            ))}
           </div>
+
+          <div key={activePhoto.id} className="photo-caption">
+            <h3>{activePhoto.title}</h3>
+            <p>{activePhoto.desc}</p>
+          </div>
+        </div>
+
+        <button
+          className="carousel-nav next-nav"
+          onClick={() => navigate('next')}
+          aria-label="Next photo"
+        >
+          &#8594;
+        </button>
+      </div>
+
+      <div className="carousel-dots" role="tablist" aria-label="Photo slides">
+        {photos.map((photo, idx) => (
+          <button
+            key={photo.id}
+            className={`dot ${idx === activeIndex ? 'active' : ''}`}
+            onClick={() => goToSlide(idx)}
+            aria-label={`Go to slide ${idx + 1}`}
+            aria-selected={idx === activeIndex}
+            role="tab"
+          />
         ))}
       </div>
 
       <div className="gallery-footer-new">
-        <p>✨ Each photo holds a special memory we've shared ✨</p>
+        <p>Each photo holds a special memory we shared.</p>
         <button className="back-btn" onClick={() => window.location.reload()}>
-          ← Back to Letters
+          &#8592; Back to Letters
         </button>
       </div>
     </div>
